@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full">
+        <h1 class="text-2xl font-bold text-center mb-6">Student Information Form</h1>
+        <form action="/submit_student_data" method="POST" class="space-y-6">
+            <!-- Student Information Table -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Student Information</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="student_id" class="block text-sm font-medium">Student ID</label>
+                        <input type="text" id="student_id" name="student_id" value="{{ student[0] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="name" class="block text-sm font-medium">Name</label>
+                        <input type="text" id="name" name="name" value="{{ student[1] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="bod" class="block text-sm font-medium">Date of Birth</label>
+                        <input type="date" id="bod" name="bod" value="{{ student[2] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="nrc" class="block text-sm font-medium">NRC</label>
+                        <input type="text" id="nrc" name="nrc" value="{{ student[3] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="fname" class="block text-sm font-medium">Father's Name</label>
+                        <input type="text" id="fname" name="fname" value="{{ student[4] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="state" class="block text-sm font-medium">State</label>
+                        <input type="text" id="state" name="state" value="{{ student[5] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="division" class="block text-sm font-medium">Division</label>
+                        <input type="text" id="division" name="division" value="{{ student[6] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="address" class="block text-sm font-medium">Address</label>
+                        <input type="text" id="address" name="address" value="{{ student[7] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium">Phone</label>
+                        <input type="text" id="phone" name="phone" value="{{ student[8] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium">Email</label>
+                        <input type="email" id="email" name="email" value="{{ student[9] }}" required
+                            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div id="details-section" class="space-y-4">
+                <h2 class="text-xl font-semibold">Details</h2>
+                {% if not detail %}
+                <div class="detail-entry grid grid-cols-1 sm:grid-cols-5 gap-4">
+                    <input type="text" name="details[0][Details_id]" placeholder="Detail ID" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[0][year]" placeholder="Year" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[0][mark1]" placeholder="Mark 1" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[0][mark2]" placeholder="Mark 2" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <button type="button" class="bg-red-500 text-white px-3 py-2 rounded-md" onclick="deleteDetailEntry(this)">Delete</button>
+                </div>
+                {% else %}
+                {% for item in detail %}
+                <div class="detail-entry grid grid-cols-1 sm:grid-cols-5 gap-4">
+                    <input type="text" name="details[{{ loop.index0 }}][Details_id]" value="{{ item.Details_id }}" placeholder="Detail ID" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[{{ loop.index0 }}][year]" value="{{ item.year }}" placeholder="Year" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[{{ loop.index0 }}][mark1]" value="{{ item.mark1 }}" placeholder="Mark 1" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[{{ loop.index0 }}][mark2]" value="{{ item.mark2 }}" placeholder="Mark 2" required
+                        class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <button type="button" class="bg-red-500 text-white px-3 py-2 rounded-md" onclick="deleteDetailEntry(this)">Delete</button>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Add Detail Button -->
+            <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="addDetailEntry()">Add Another Entry</button>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-md">Add New Student</button>
+            </div>
+        </form>
+
+        <!-- View Student Data Button -->
+        <div class="text-center mt-4">
+            <button onclick="window.location.href='/student_data';" class="bg-gray-500 text-white px-6 py-2 rounded-md">View Student Data</button>
+        </div>
+    </div>
+
+    <script>
+        function addDetailEntry() {
+            const section = document.getElementById('details-section');
+            const index = section.children.length;
+            const newEntry = `
+                <div class="detail-entry grid grid-cols-1 sm:grid-cols-5 gap-4">
+                    <input type="text" name="details[${index}][Details_id]" placeholder="Detail ID" required class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[${index}][year]" placeholder="Year" required class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[${index}][mark1]" placeholder="Mark 1" required class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <input type="number" name="details[${index}][mark2]" placeholder="Mark 2" required class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-md">
+                    <button type="button" class="bg-red-500 text-white px-3 py-2 rounded-md" onclick="deleteDetailEntry(this)">Delete</button>
+                </div>
+            `;
+            section.insertAdjacentHTML('beforeend', newEntry);
+        }
+
+        function deleteDetailEntry(button) {
+            const entry = button.closest('.detail-entry');
+            entry.remove();
+        }
+    </script>
+</body>
+</html>

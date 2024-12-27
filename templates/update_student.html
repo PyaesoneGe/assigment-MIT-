@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold text-center mb-6">Update Student</h1>
+
+        <form method="POST" action="{{ url_for('update_student', student_id=student[0]) }}">
+            <input type="hidden" name="student_id" value="{{ student[0] }}">
+
+            <!-- Student Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="block font-medium">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ student[1] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="bod" class="block font-medium">Birthdate:</label>
+                    <input type="date" id="bod" name="bod" value="{{ student[2] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="nrc" class="block font-medium">NRC:</label>
+                    <input type="text" id="nrc" name="nrc" value="{{ student[3] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="fname" class="block font-medium">Father's Name:</label>
+                    <input type="text" id="fname" name="fname" value="{{ student[4] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="state" class="block font-medium">State:</label>
+                    <input type="text" id="state" name="state" value="{{ student[5] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="division" class="block font-medium">Division:</label>
+                    <input type="text" id="division" name="division" value="{{ student[6] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="address" class="block font-medium">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ student[7] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="phone" class="block font-medium">Phone:</label>
+                    <input type="text" id="phone" name="phone" value="{{ student[8] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="email" class="block font-medium">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ student[9] }}" 
+                           class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+            </div>
+
+            <!-- Student Details -->
+            <h2 class="text-lg font-semibold mt-6 mb-2">Student Details</h2>
+            <table class="table-auto w-full border-collapse border border-gray-300 text-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border">DID</th>
+                        <th class="px-4 py-2 border">Year</th>
+                        <th class="px-4 py-2 border">Mark 1</th>
+                        <th class="px-4 py-2 border">Mark 2</th>
+                        <th class="px-4 py-2 border">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="details-table">
+                    {% for d in detail %}
+                    <tr id="detail-{{ loop.index0 }}">
+                        <td class="border px-4 py-2"><input type="text" name="details[{{ loop.index0 }}][Details_id]" value="{{ d[1] }}" class="w-full"></td>
+                        <td class="border px-4 py-2"><input type="text" name="details[{{ loop.index0 }}][year]" value="{{ d[2] }}" class="w-full"></td>
+                        <td class="border px-4 py-2"><input type="text" name="details[{{ loop.index0 }}][mark1]" value="{{ d[3] }}" class="w-full"></td>
+                        <td class="border px-4 py-2"><input type="text" name="details[{{ loop.index0 }}][mark2]" value="{{ d[4] }}" class="w-full"></td>
+                        <td class="border px-4 py-2 text-center">
+                            <button type="button" class="text-white bg-red-500 px-3 py-1 rounded hover:bg-red-600 delete-detail" data-index="{{ loop.index0 }}">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Add Detail Button -->
+            <div class="flex justify-between items-center mt-4">
+                <button type="button" id="add-detail" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Mark</button>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Update</button>
+            </div>
+<br>
+
+            
+              
+        </form>
+        <form action="/handle_action" method="POST" class="flex justify-center">
+            <input type="hidden" name="student" value="{{ student[1] }}">
+            <button type="submit" name="action" value="delete" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-yellow-600">
+                Delete
+            </button>
+        </form>
+        
+        
+    </div>
+
+    <script>
+        // Add new detail row
+        document.getElementById('add-detail').addEventListener('click', function () {
+            const table = document.getElementById('details-table');
+            const index = table.children.length;
+
+            const detailHTML = `
+                <tr id="detail-${index}">
+                    <td class="border px-4 py-2"><input type="text" name="details[${index}][Details_id]" value="" class="w-full"></td>
+                    <td class="border px-4 py-2"><input type="text" name="details[${index}][year]" value="" class="w-full"></td>
+                    <td class="border px-4 py-2"><input type="text" name="details[${index}][mark1]" value="" class="w-full"></td>
+                    <td class="border px-4 py-2"><input type="text" name="details[${index}][mark2]" value="" class="w-full"></td>
+                    <td class="border px-4 py-2 text-center">
+                        <button type="button" class="text-white bg-red-500 px-3 py-1 rounded hover:bg-red-600 delete-detail" data-index="${index}">Delete</button>
+                    </td>
+                </tr>
+            `;
+            table.insertAdjacentHTML('beforeend', detailHTML);
+        });
+
+        // Delete detail row
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('delete-detail')) {
+                const index = e.target.getAttribute('data-index');
+                const detailRow = document.getElementById(`detail-${index}`);
+                if (detailRow) {
+                    detailRow.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
